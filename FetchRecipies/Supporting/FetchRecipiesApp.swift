@@ -11,7 +11,8 @@ import SwiftUI
 struct FetchRecipiesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }
+
