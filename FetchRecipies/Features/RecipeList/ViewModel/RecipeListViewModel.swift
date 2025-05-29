@@ -56,11 +56,12 @@ class RecipeListViewModel: ObservableObject {
 
     func fetchRecipes() async {
         isLoading = true
-        defer { isLoading = false }
 
         do {
             recipes = try await APIService.shared.fetchRecipes(from: endpoint)
+            isLoading = false
         } catch {
+            isLoading = false
             errorMessage = "Failed to load recipes. Try again later."
             recipes = []
         }

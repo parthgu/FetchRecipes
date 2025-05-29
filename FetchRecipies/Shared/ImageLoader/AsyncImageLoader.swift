@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct AsyncImageLoader: View {
+struct AsyncImageLoader<Placeholder: View>: View {
     let url: URL?
-    let placeholder: Image
+    let placeholder: Placeholder
 
     @StateObject private var loader = ImageLoader()
 
@@ -20,7 +20,6 @@ struct AsyncImageLoader: View {
                     .resizable()
             } else {
                 placeholder
-                    .resizable()
             }
         }
         .onAppear {

@@ -7,8 +7,23 @@
 
 import SwiftUI
 
-struct FavoritesView: View {
+struct FavoritesListView: View {
+    @StateObject var viewModel: FavoritesViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(viewModel.favorites) { recipe in
+            RecipeRowView(recipe: recipe)
+        }
+        .navigationTitle("Favorites")
+        .refreshable { await viewModel.refresh() }
+        .overlay {
+            if viewModel.favorites.isEmpty {
+                Text("No favorites yet.")
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }
+        }
     }
 }
+

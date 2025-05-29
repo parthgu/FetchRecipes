@@ -10,9 +10,27 @@
 import SwiftUI
 
 struct RootView: View {
+    @StateObject private var listVM = RecipeListViewModel()
+    @StateObject private var favorites = FavoritesStore()
+
     var body: some View {
-        NavigationStack {
-            RecipeListView()
+        TabView {
+            NavigationStack {
+                RecipeListView(viewModel: listVM)
+            }
+            .tabItem { Label("Browse", systemImage: "book") }
+
+            NavigationStack {
+                FavoritesListView(
+                  viewModel: FavoritesViewModel(
+                    listVM: listVM,
+                    favoritesStore: favorites
+                  )
+                )
+            }
+            .tabItem { Label("Favorites", systemImage: "heart.fill") }
         }
+        .environmentObject(favorites)
     }
 }
+
