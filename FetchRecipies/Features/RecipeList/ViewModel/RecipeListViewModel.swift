@@ -23,7 +23,9 @@ class RecipeListViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isLoading = false
 
-    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+//    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+//    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
+    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
     
     private var normalizedSearchText: String {
         searchText

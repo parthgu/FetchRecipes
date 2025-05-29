@@ -11,31 +11,52 @@ struct RecipeListView: View {
     @ObservedObject var viewModel: RecipeListViewModel
 
     var body: some View {
-        Group {
-            if viewModel.isLoading {
-                List(0..<5, id: \.self) { _ in
-                    SkeletonRowView()
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(spacing: 0) {
+                    // 1. Loading skeletons
+                    if viewModel.isLoading {
+                        ForEach(0..<5, id: \.self) { _ in
+                            SkeletonRowView()
+                                .frame(width: proxy.size.width, height: 80)
+                        }
+
+                    // 2. Error centered
+                    } else if let error = viewModel.errorMessage {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            // fill the scrollview so it centers vertically
+                            .frame(width: proxy.size.width,
+                                   height: proxy.size.height)
+                    
+                    // 3. Empty centered
+                    } else if viewModel.displayedRecipes.isEmpty {
+                        Text(viewModel.searchText.isEmpty
+                             ? "No recipes available."
+                             : "No recipes match “\(viewModel.searchText)”.")
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .frame(width: proxy.size.width,
+                                   height: proxy.size.height)
+
+                    // 4. Actual rows
+                    } else {
+                        LazyVStack(spacing: 0) {
+                            ForEach(viewModel.displayedRecipes) { recipe in
+                                RecipeRowView(recipe: recipe)
+                                    .id(recipe.id)
+                                    .padding(.vertical, 4)
+                            }
+                        }
+                    }
                 }
-            } else if let error = viewModel.errorMessage {
-                Text(error)
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
-            } else if viewModel.displayedRecipes.isEmpty {
-                Text(viewModel.searchText.isEmpty
-                     ? "No recipes available."
-                     : "No recipes match “\(viewModel.searchText)”.")
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-            } else {
-                List(viewModel.displayedRecipes) { recipe in
-                    RecipeRowView(recipe: recipe)
-                        .id(recipe.id)
-                }
-                .refreshable { await viewModel.fetchRecipes() }
+                .frame(width: proxy.size.width)
+            }
+            .refreshable {
+                await viewModel.fetchRecipes()
             }
         }
-        .listStyle(.plain)
-        .animation(.default, value: viewModel.displayedRecipes)
         .navigationTitle("Recipes")
         .searchable(text: $viewModel.searchText, prompt: "Search recipes")
         .toolbar {
