@@ -12,6 +12,7 @@ struct FetchRecipiesApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .tint(.orange)
         }
     }
 }

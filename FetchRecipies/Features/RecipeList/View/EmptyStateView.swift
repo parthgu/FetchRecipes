@@ -8,11 +8,29 @@
 import SwiftUI
 
 struct EmptyStateView: View {
+    let message: String
+    let refreshAction: () -> Void
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 20) {
+            Text(message)
+                .foregroundStyle(.secondary)
+                .fontWeight(.semibold)
+                .multilineTextAlignment(.center)
+
+            Button(action: refreshAction) {
+                Text("Refresh")
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 6)
+                    .background(Color.accentColor)
+                    .foregroundColor(.white)
+                    .clipShape(.capsule)
+            }
+        }
     }
 }
 
 #Preview {
-    EmptyStateView()
+    EmptyStateView(message: "No recipies available") {}
 }
