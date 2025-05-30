@@ -20,7 +20,7 @@ struct ErrorStateView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Image("alert", bundle: .main)
+            Image(AssetNameConstants.alert, bundle: .main)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
@@ -33,7 +33,7 @@ struct ErrorStateView: View {
             }
             .multilineTextAlignment(.center)
             Button(action: retryAction) {
-                Text("Try Again")
+                Text(StringConstants.tryAgain)
                     .fontWeight(.semibold)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 6)
@@ -43,7 +43,4 @@ struct ErrorStateView: View {
             }
         }
     }
-}
-#Preview {
-    ErrorStateView(message: "Something went wrong", subtitle: "There was a problem loading the data.", retryAction: { })
 }

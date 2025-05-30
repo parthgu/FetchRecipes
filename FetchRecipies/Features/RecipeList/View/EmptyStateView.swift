@@ -19,7 +19,7 @@ struct EmptyStateView: View {
                 .multilineTextAlignment(.center)
 
             Button(action: refreshAction) {
-                Text("Refresh")
+                Text(StringConstants.refresh)
                     .fontWeight(.semibold)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 6)
@@ -29,8 +29,4 @@ struct EmptyStateView: View {
             }
         }
     }
-}
-
-#Preview {
-    EmptyStateView(message: "No recipies available") {}
 }

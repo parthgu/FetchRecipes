@@ -35,8 +35,8 @@ struct RecipeRowView: View {
             } label: {
               Image(systemName:
                 favoritesStore.contains(recipe.id)
-                  ? "heart.fill"
-                  : "heart"
+                    ? AssetNameConstants.heartFill
+                  : AssetNameConstants.heart
               )
             }
             .foregroundStyle(.red)

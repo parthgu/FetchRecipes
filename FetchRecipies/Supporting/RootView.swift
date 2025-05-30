@@ -18,7 +18,7 @@ struct RootView: View {
             NavigationStack {
                 RecipeListView(viewModel: listVM)
             }
-            .tabItem { Label("Browse", systemImage: "book") }
+            .tabItem { Label(StringConstants.TabNames.browse, systemImage: AssetNameConstants.book) }
 
             NavigationStack {
                 FavoritesListView(
@@ -28,7 +28,7 @@ struct RootView: View {
                   )
                 )
             }
-            .tabItem { Label("Favorites", systemImage: "heart.fill") }
+            .tabItem { Label(StringConstants.TabNames.favorites, systemImage: AssetNameConstants.heartFill) }
         }
         .environmentObject(favorites)
     }

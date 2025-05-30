@@ -12,7 +12,6 @@ class RecipeListViewModel: ObservableObject {
     enum SortOption: String, CaseIterable, Identifiable {
         case nameAsc = "A–Z"
         case nameDesc = "Z–A"
-        case cuisine  = "Cuisine"
         
         var id: Self { self }
     }
@@ -51,8 +50,6 @@ class RecipeListViewModel: ObservableObject {
             return filtered.sorted { $0.name < $1.name }
         case .nameDesc:
             return filtered.sorted { $0.name > $1.name }
-        case .cuisine:
-            return filtered.sorted { $0.cuisine < $1.cuisine }
         }
     }
 
