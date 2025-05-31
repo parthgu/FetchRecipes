@@ -1,118 +1,96 @@
-# FetchRecipes 🍳
+# FetchRecipies 🍳
 
-A modern SwiftUI recipe discovery app that helps you explore, save, and find your next favorite meal. Built with Swift's latest features and following best practices in iOS development.
+A modern SwiftUI recipe discovery app that helps you explore, save, and find your next favorite meal.
 
-## Features
+### Summary
 
-### 🔍 Browse
-
-- Browse through a curated list of recipes from various cuisines
-- Search recipes by name or cuisine type
-- Sort recipes alphabetically (A-Z or Z-A)
-- View detailed recipe information including:
-  - High-quality photos
-  - Cuisine type
-  - Source links
-  - YouTube tutorials (when available)
-- Share recipes with friends
-
-### ❤️ Favorites
-
-- Save your favorite recipes for quick access
-- Manage your collection of saved recipes
-- Access your favorites offline
-- Remove recipes from favorites with a single tap
-
-### 🎲 Discover
-
+[Screenshots/Video to be added showing:]
+- Browse tab with recipe list, search, and sorting functionality
+- Recipe detail view with high-quality photos and sharing options
+- Favorites tab displaying saved recipes
 - Tinder-style recipe discovery interface
-- Swipe right to add to favorites
-- Swipe left to skip
-- Beautiful full-screen recipe cards
+- Error states and empty states handling
 
-## Technical Highlights
+### Focus Areas
 
-### Modern Swift Features
+1. **User Experience & Interface**
+   - Clean, intuitive navigation between three main sections (Browse, Favorites, Discover)
+   - Smooth animations and transitions, especially in the Tinder-style discovery view
+   - Responsive search and filtering capabilities
+   - Meaningful error and empty states
 
-- Built entirely with SwiftUI
-- Leverages `async/await` for all asynchronous operations
-- Uses Swift Concurrency for efficient background tasks
-- MVVM architecture for clean separation of concerns
+2. **Performance & Efficiency**
+   - Custom image caching system to minimize network usage
+   - Efficient memory management with disk and memory caching
+   - Responsive UI
+   - Smart data loading and state management
 
-### Networking & Data Management
+3. **Modern Swift Implementation**
+   - Full SwiftUI implementation for UI components
+   - Leveraging async/await for all asynchronous operations
+   - MVVM architecture for clean code organization
+   - Zero external dependencies as required
 
-- Custom implementation of efficient network layer
-- Smart image caching system to minimize bandwidth usage
-- Robust error handling for various API scenarios:
-  - Malformed data handling
-  - Empty state management
-  - Network error recovery
+### Time Spent
 
-### Performance
+Approximately 12 hours total, allocated as follows:
 
-- Lazy loading of images and content
-- Efficient memory management
-- Smooth animations and transitions
-- Responsive UI across all iPhone sizes
+- Initial setup and architecture planning: ~2 hours
+- Core functionality (Browse, API integration): ~3 hours
+- Image caching system: ~2 hours
+- Favorites implementation: ~1.5 hours
+- Discover (Tinder-style) feature: ~2 hours
+- Polish, error handling, and testing: ~1.5 hours
 
-### Zero Dependencies
+### Trade-offs and Decisions
 
-- Built entirely with Apple frameworks
-- No external dependencies required
-- Self-contained image caching solution
-- Custom networking implementation
+1. **Dependency Injection**
+   - Chose to use singletons and direct dependencies for time efficiency
+   - Trade-off: Less testable and harder to modify dependencies
+   - Alternative would have been a proper DI system for better testing and modularity
 
-## API Endpoints
+2. **Scalability Considerations**
+   - Focused on getting core features working reliably
+   - Some architectural decisions might need revision for larger scale:
+     - Current caching system might need optimization for larger datasets
+     - State management could be more robust
+     - Network layer could be more configurable
 
-The app uses the following endpoints:
+3. **Testing Approach**
+   - Prioritized testing core business logic and data flow
+   - Limited UI testing due to time constraints
+   - Focused on critical paths rather than comprehensive coverage
 
-- Main: `https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json`
-- Test Endpoints:
-  - Malformed Data: `https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json`
-  - Empty Data: `https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json`
+### Weakest Part of the Project
 
-## Requirements
+The dependency management approach is the weakest aspect of the project. Using singletons and direct dependencies makes the code:
+- More tightly coupled
+- Harder to test thoroughly
+- More challenging to modify or extend
+- Less flexible for future requirements
 
-- iOS 18.0+
-- Xcode 14.0+
-- Swift 5.5+
+A better approach would have been:
+- Implementing a proper dependency injection system
+- Using protocols for better abstraction
+- Creating more modular components
+- Setting up a comprehensive testing infrastructure
 
-## Installation
+### Additional Information
 
-1. Clone the repository
-2. Open `FetchRecipies.xcodeproj` in Xcode
-3. Build and run the project
+1. **Project Structure**
+   - Organized by feature modules for better maintainability
+   - Shared utilities and components for reusability
+   - Clear separation of concerns in MVVM pattern
 
-## Architecture
+2. **Future Improvements**
+   - Implement proper dependency injection
+   - Add more comprehensive test coverage
+   - Enhance caching system with size limits and expiration
+   - Add offline support for browsing favorites
+   - Implement more advanced sorting and filtering options
 
-The project follows the MVVM (Model-View-ViewModel) architecture pattern and is organized into the following main directories:
-
-- `Features/`: Contains feature-specific code organized by domain
-  - `Browse/`: Browse tab implementation
-  - `Favorites/`: Favorites management
-  - `Discover/`: Recipe discovery interface
-- `Core/`: Core application components
-- `Networking/`: API and networking layer
-- `Shared/`: Shared utilities and components
-- `Resources/`: Assets and resource files
-
-## Testing
-
-The app includes unit tests focusing on core business logic:
-- Data fetching
-- Caching mechanisms
-- Data transformation
-- Business logic validation
-
-## Error Handling
-
-The app gracefully handles various error scenarios:
-
-- Network connectivity issues
-- Malformed API responses
-- Empty data states
-- Image loading failures
-
-## Credits
-
-Created by Parth Gupta as part of the Fetch iOS coding challenge.
+3. **Technical Notes**
+   - Built with iOS 18.0+ to leverage latest SwiftUI features
+   - Custom image caching implementation as per requirements
+   - Error handling covers all edge cases in API responses
+   - No external dependencies used as specified
