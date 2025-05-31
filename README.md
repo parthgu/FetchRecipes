@@ -82,9 +82,36 @@ A better approach would have been:
 ### Additional Information
 
 1. **Project Structure**
-   - Organized by feature modules for better maintainability
-   - Shared utilities and components for reusability
-   - Clear separation of concerns in MVVM pattern
+   ```
+   FetchRecipies/
+   ├── Features/                 # Feature-based modules
+   │   ├── Browse/              # Browse feature implementation
+   │   │   ├── Models/         # Recipe and data models
+   │   │   ├── Views/          # SwiftUI views
+   │   │   └── ViewModels/     # Browse-related view models
+   │   ├── Favorites/          # Favorites feature implementation
+   │   │   ├── Models/
+   │   │   ├── Views/
+   │   │   └── ViewModels/
+   │   └── Discover/           # Tinder-style discovery feature
+   │       ├── Models/
+   │       ├── Views/
+   │       └── ViewModels/
+   ├── Core/                    # Core app components
+   │   ├── Extensions/         # Swift extensions
+   │   └── Constants/          # App-wide constants
+   ├── Shared/                  # Shared components
+   │   ├── Views/              # Reusable UI components
+   │   └── Utilities/          # Helper functions
+   ├── Networking/              # API and networking layer
+   │   ├── APIService.swift    # Main API service
+   │   └── ImageCache.swift    # Custom image caching
+   ├── Resources/               # App resources
+   │   ├── Assets.xcassets     # Images and colors
+   │   └── Localizable.strings # String resources
+   ├── RootView.swift          # Main app view
+   └── FetchRecipiesApp.swift  # App entry point
+   ```
 
 2. **Future Improvements**
    - Implement proper dependency injection
