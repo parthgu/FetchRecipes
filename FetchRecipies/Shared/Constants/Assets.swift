@@ -20,4 +20,5 @@ enum AssetNameConstants {
     static let globe        = "globe"
     static let playCircle   = "play.circle"
     static let emptyDeckIcon = "eyes"
+    static let emptyStateIcon = "tray"
 }

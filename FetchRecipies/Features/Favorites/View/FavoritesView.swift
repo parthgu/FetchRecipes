@@ -34,10 +34,9 @@ struct FavoritesListView: View {
                 VStack {
                     Spacer()
                     Text("No favorites yet.")
-                        .font(.title3)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal)
                     Spacer()
                 }
             }

@@ -13,6 +13,11 @@ struct EmptyStateView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            Image(systemName: AssetNameConstants.emptyStateIcon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 80, height: 80)
+                .foregroundColor(.secondary)
             Text(message)
                 .foregroundStyle(.secondary)
                 .fontWeight(.semibold)
