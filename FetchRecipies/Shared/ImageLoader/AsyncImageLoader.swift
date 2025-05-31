@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// Loads and displays an image from a URL asynchronously.
+/// Displays `placeholder` until the image finishes loading.
 struct AsyncImageLoader<Placeholder: View>: View {
     let url: URL?
     let placeholder: Placeholder
@@ -19,12 +21,13 @@ struct AsyncImageLoader<Placeholder: View>: View {
                 Image(uiImage: image)
                     .resizable()
             } else {
+                // Show the provided placeholder view while loading
                 placeholder
             }
         }
         .onAppear {
+            // Start loading the image once this view appears
             loader.load(from: url)
         }
     }
 }
-

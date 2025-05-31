@@ -9,23 +9,21 @@ import SwiftUI
 
 @MainActor
 final class CardStackViewModel: ObservableObject {
-    // MARK: - Published state
-
-    /// The current stack of recipes to display (filtered + shuffled).
+    // Current stack of recipes that can be swiped (excludes favorites and is shuffled)
     @Published var deck: [Recipe] = []
 
-    /// Horizontal offset used for dragging the top card.
+    // Horizontal drag offset for the top card
     @Published var xOffset: CGFloat = 0
 
-    /// Rotation angle (in degrees) while dragging.
+    // Rotation angle in degrees for the top card during drag
     @Published var degrees: Double = 0
 
-    /// A reference to the favorites store; assigned by the view in onAppear.
+    // Injected by the view so we can add/remove favorites
     weak var favoritesStore: FavoritesStore?
 
     // MARK: - Public API
 
-    /// Sets up `deck` by filtering out recipes already in favorites and shuffling.
+    /// Filters out any recipes already favorited and shuffles the rest to form the deck.
     func loadDeck(from recipes: [Recipe]) {
         guard let store = favoritesStore else { return }
         deck = recipes
@@ -33,59 +31,58 @@ final class CardStackViewModel: ObservableObject {
             .shuffled()
     }
 
-    /// The topmost recipe in the deck (the one currently draggable).
+    /// The recipe at the top of the stack (last element in `deck`).
     var topRecipe: Recipe? {
         deck.last
     }
 
-    /// Call this whenever the user’s drag changes. Updates offset and rotation.
+    /// Called continuously during a drag gesture; updates offset and rotation.
     func onDragChanged(_ value: DragGesture.Value) {
         xOffset = value.translation.width
+        // Rotate proportionally: wider swipe → greater tilt
         degrees = Double(value.translation.width / 25)
     }
 
-    /// Call this when the drag ends. Decides whether to swipe left/right or return to center.
+    /// Called when dragging ends; determines if the top card should snap back or be swiped away.
     func onDragEnded(_ value: DragGesture.Value) {
         let width = value.translation.width
         let cutoff = SizeConstants.screenCutoff
 
-        guard let recipe = topRecipe else {
-            return
-        }
+        guard let recipe = topRecipe else { return }
 
         switch width {
         case let w where abs(w) <= cutoff:
+            // Not far enough: reset to center
             returnToCenter()
         case let w where w > cutoff:
+            // Swiped right: favorite
             performSwipeRight(on: recipe)
         default:
+            // Swiped left: remove (and unfavorite)
             performSwipeLeft(on: recipe)
         }
     }
 
-    /// Trigger a programmatic “swipe right” (e.g. via button):
+    /// Programmatically trigger a right swipe (e.g., via a button tap).
     func swipeRightAction() {
         guard let recipe = topRecipe else { return }
         performSwipeRight(on: recipe)
     }
 
-    /// Trigger a programmatic “swipe left” (e.g. via button):
+    /// Programmatically trigger a left swipe (e.g., via a button tap).
     func swipeLeftAction() {
         guard let recipe = topRecipe else { return }
         performSwipeLeft(on: recipe)
     }
 
-    // MARK: - Private helpers
+    // MARK: - Private Helpers
 
     private func performSwipeRight(on recipe: Recipe) {
-        // Move card off-screen to the right and rotate
+        // Animate card off-screen to the right with a slight rotation
         xOffset = 500
         degrees = 12
 
-        // Update favorites
         favoritesStore?.add(recipe.id)
-
-        // Remove the card after a slight delay to allow animation
         removeTopCard()
     }
 
@@ -93,9 +90,7 @@ final class CardStackViewModel: ObservableObject {
         xOffset = -500
         degrees = -12
 
-        // Remove from favorites (in case it was there)
         favoritesStore?.remove(recipe.id)
-
         removeTopCard()
     }
 
@@ -104,6 +99,7 @@ final class CardStackViewModel: ObservableObject {
         degrees = 0
     }
 
+    /// Removes the top card after a brief delay to allow the swipe animation to complete.
     private func removeTopCard() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             guard !self.deck.isEmpty else { return }
@@ -112,4 +108,3 @@ final class CardStackViewModel: ObservableObject {
         }
     }
 }
-

@@ -8,10 +8,13 @@
 import Foundation
 import SwiftUI
 
+/// ViewModel for a single recipe detail view.
 @MainActor
 final class RecipeDetailViewModel: ObservableObject {
+    /// The recipe being displayed.
     @Published var recipe: Recipe
 
+    /// Initializes with the given recipe.
     init(recipe: Recipe) {
         self.recipe = recipe
     }

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// A view modifier that applies a card-like appearance:
+/// horizontal padding, a light background, rounded corners, and a subtle shadow.
 struct CardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -19,6 +21,7 @@ struct CardStyle: ViewModifier {
 }
 
 extension View {
+    /// Applies the `CardStyle` modifier for a consistent card appearance.
     func cardStyle() -> some View {
         modifier(CardStyle())
     }

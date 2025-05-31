@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+/// Shows detailed information for a single recipe, including image, title, cuisine, action buttons, and favorite toggle.
 struct RecipeDetailView: View {
+    /// View model that holds and manages the data for this detail view.
     @StateObject private var viewModel: RecipeDetailViewModel
     @Environment(\.openURL) private var openURL
     @EnvironmentObject private var favoritesStore: FavoritesStore
 
+    /// Initializes with a Recipe and creates the corresponding view model.
     init(recipe: Recipe) {
         _viewModel = StateObject(wrappedValue: RecipeDetailViewModel(recipe: recipe))
     }
@@ -19,7 +22,7 @@ struct RecipeDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // 1. Large Recipe Image
+                // MARK: - Large Recipe Image
                 AsyncImageLoader(
                     url: viewModel.recipe.photoURLLarge,
                     placeholder:
@@ -30,12 +33,13 @@ struct RecipeDetailView: View {
                 .aspectRatio(4/3, contentMode: .fit)
                 .cornerRadius(12)
 
-                // 2. Title & Cuisine
+                // MARK: - Title & Cuisine
                 HStack(alignment: .top) {
                     Text(viewModel.recipe.name)
                         .font(.title)
                         .fontWeight(.bold)
                     Spacer()
+                    // Show share button if a source URL is available
                     if let url = viewModel.recipe.sourceURL {
                         ShareLink(item: url) {
                             Image(systemName: AssetNameConstants.share)
@@ -52,14 +56,16 @@ struct RecipeDetailView: View {
 
                 Divider()
 
-                // 3. Action Buttons
+                // MARK: - Action Buttons
                 HStack(spacing: 24) {
+                    // Open the recipe's web source when tapped
                     if let url = viewModel.recipe.sourceURL {
                         Button(action: { openURL(url) }) {
                             Label(StringConstants.source, systemImage: AssetNameConstants.globe)
                         }
                         .buttonStyle(.bordered)
                     }
+                    // Open YouTube video if available
                     if let yt = viewModel.recipe.youtubeURL {
                         Button(action: { openURL(yt) }) {
                             Label(StringConstants.watch, systemImage: AssetNameConstants.playCircle)
@@ -67,15 +73,15 @@ struct RecipeDetailView: View {
                         .buttonStyle(.bordered)
                     }
                     Spacer()
-                    
+                    // Favorite/unfavorite toggle for this recipe
                     Button {
                         favoritesStore.toggle(viewModel.recipe.id)
                     } label: {
-                      Image(systemName:
-                                favoritesStore.contains(viewModel.recipe.id)
-                            ? AssetNameConstants.heartFill
-                          : AssetNameConstants.heart
-                      )
+                        Image(systemName:
+                            favoritesStore.contains(viewModel.recipe.id)
+                                ? AssetNameConstants.heartFill
+                                : AssetNameConstants.heart
+                        )
                     }
                     .foregroundStyle(.red)
                     .buttonStyle(.plain)
@@ -85,6 +91,7 @@ struct RecipeDetailView: View {
             }
             .padding()
         }
+        // Display the recipe name as navigation title
         .navigationTitle(viewModel.recipe.name)
         .navigationBarTitleDisplayMode(.inline)
     }

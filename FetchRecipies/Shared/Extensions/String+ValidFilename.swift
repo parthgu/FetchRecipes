@@ -8,7 +8,13 @@
 import Foundation
 
 extension String {
+    /// Replaces any character not alphanumeric with an underscore to create a filesystem-safe filename.
     func toValidFilename() -> String {
-        return self.replacingOccurrences(of: "[^a-zA-Z0-9]", with: "_", options: .regularExpression)
+        // Regex "[^a-zA-Z0-9]" matches any character that's not a letter or digit.
+        return self.replacingOccurrences(
+            of: "[^a-zA-Z0-9]",
+            with: "_",
+            options: .regularExpression
+        )
     }
 }

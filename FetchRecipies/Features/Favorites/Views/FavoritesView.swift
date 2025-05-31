@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+/// Displays the user's favorite recipes. Shows a list when there are favorites,
+/// otherwise overlays a “No favorites yet” message.
 struct FavoritesListView: View {
     @StateObject var viewModel: FavoritesViewModel
 
     var body: some View {
         ZStack {
-            // Scrollable list of favorite recipes
+            // List of favorite recipe cards
             ScrollView {
                 LazyVStack(spacing: 16) {
                     ForEach(viewModel.favorites) { recipe in
@@ -26,10 +28,11 @@ struct FavoritesListView: View {
             }
             .padding()
             .refreshable {
+                // Refresh the favorites in case they’ve changed elsewhere
                 await viewModel.refresh()
             }
 
-            // Overlay shown when there are no favorites
+            // If no favorites, show a centered placeholder message
             if viewModel.favorites.isEmpty {
                 VStack {
                     Spacer()

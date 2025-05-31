@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-/// A stack of swipeable cards where only the top card responds to drags.
-/// Swiping right adds the recipe to favorites; swiping left removes it.
+/// A stack of swipeable recipe cards.
+/// Only the top card handles drag gestures; swiping right favorites the recipe, left removes it.
 struct CardStackView: View {
     let recipes: [Recipe]
 
-    /// The view model encapsulates all the swipe logic and deck state.
+    // ViewModel manages swipe state, xOffset, rotation, and deck ordering
     @StateObject private var viewModel = CardStackViewModel()
 
-    /// FavoritesStore is used by the view model; we assign it in onAppear.
+    // Pass favorites actions down to the ViewModel
     @EnvironmentObject private var favoritesStore: FavoritesStore
 
     var body: some View {
@@ -30,17 +30,17 @@ struct CardStackView: View {
             }
         }
         .onAppear {
-            // Provide the favorites store to the view model, then load the initial deck.
+            // Inject the FavoritesStore into the ViewModel and initialize the deck
             viewModel.favoritesStore = favoritesStore
             viewModel.loadDeck(from: recipes)
         }
         .onChange(of: recipes) { _, newRecipes in
-            // Reload deck whenever `recipes` changes from the parent.
+            // Reload deck when the parent recipes array changes
             viewModel.loadDeck(from: newRecipes)
         }
     }
 
-    // MARK: - Card Stack
+    // MARK: - Deck Rendering
 
     @ViewBuilder
     private var deckView: some View {
@@ -53,25 +53,28 @@ struct CardStackView: View {
 
     @ViewBuilder
     private func buildCard(for recipe: Recipe) -> some View {
-        // Determine if this is the top card
-        let isTop = recipe == viewModel.topRecipe
+        let isTop = (recipe == viewModel.topRecipe)
 
-        SwipeableRecipeCardView(recipe: recipe, xOffset: isTop ? viewModel.xOffset : 0)
-            .offset(x: isTop ? viewModel.xOffset : 0)
-            .rotationEffect(.degrees(isTop ? viewModel.degrees : 0))
-            .zIndex(isTop ? 1 : 0)
-            .gesture(
-                isTop
-                    ? DragGesture()
-                        .onChanged { value in
-                            viewModel.onDragChanged(value)
-                        }
-                        .onEnded { value in
-                            viewModel.onDragEnded(value)
-                        }
-                    : nil
-            )
-            .animation(.snappy, value: viewModel.xOffset)
+        SwipeableRecipeCardView(
+            recipe: recipe,
+            xOffset: isTop ? viewModel.xOffset : 0
+        )
+        .offset(x: isTop ? viewModel.xOffset : 0)
+        .rotationEffect(.degrees(isTop ? viewModel.degrees : 0))
+        .zIndex(isTop ? 1 : 0) // Keep the top card above others
+        .gesture(
+            isTop
+                // Only attach drag gestures to the top card
+                ? DragGesture()
+                    .onChanged { value in
+                        viewModel.onDragChanged(value)
+                    }
+                    .onEnded { value in
+                        viewModel.onDragEnded(value)
+                    }
+                : nil
+        )
+        .animation(.snappy, value: viewModel.xOffset)
     }
 
     // MARK: - Action Buttons
@@ -79,7 +82,7 @@ struct CardStackView: View {
     @ViewBuilder
     private var actionButtons: some View {
         HStack(spacing: 40) {
-            // “X” button for swipe left
+            // Force a left swipe (reject)
             Button {
                 viewModel.swipeLeftAction()
             } label: {
@@ -93,7 +96,7 @@ struct CardStackView: View {
             }
             .buttonStyle(.plain)
 
-            // “Heart” button for swipe right
+            // Force a right swipe (favorite)
             Button {
                 viewModel.swipeRightAction()
             } label: {

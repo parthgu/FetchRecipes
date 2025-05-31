@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+/// Displays a single recipe row with an image, title, cuisine, and a favorite button.
 struct RecipeRowView: View {
     let recipe: Recipe
     @EnvironmentObject private var favoritesStore: FavoritesStore
 
     var body: some View {
         HStack {
+            // Load recipe thumbnail asynchronously; show gray box while loading
             AsyncImageLoader(
                 url: recipe.photoURLSmall,
                 placeholder: Rectangle().fill(Color.gray.opacity(0.5))
@@ -27,17 +29,18 @@ struct RecipeRowView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            
+
             Spacer()
-            
+
+            // Favorite/unfavorite toggle
             Button {
-              favoritesStore.toggle(recipe.id)
+                favoritesStore.toggle(recipe.id)
             } label: {
-              Image(systemName:
-                favoritesStore.contains(recipe.id)
-                    ? AssetNameConstants.heartFill
-                  : AssetNameConstants.heart
-              )
+                Image(systemName:
+                    favoritesStore.contains(recipe.id)
+                        ? AssetNameConstants.heartFill
+                        : AssetNameConstants.heart
+                )
             }
             .foregroundStyle(.red)
             .buttonStyle(.plain)

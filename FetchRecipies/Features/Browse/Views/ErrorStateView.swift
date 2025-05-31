@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// Displays an error image, message, optional subtitle, and a retry button.
+/// Used when loading recipes fails or other errors occur.
 struct ErrorStateView: View {
     let message: String
     let subtitle: String?
@@ -20,18 +22,23 @@ struct ErrorStateView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            // Error illustration
             Image(AssetNameConstants.alert, bundle: .main)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
-            VStack (spacing: 12) {
+            
+            VStack(spacing: 12) {
                 Text(message)
                     .fontWeight(.bold)
+                // Show subtitle only if provided
                 if let subtitle = subtitle {
                     Text(subtitle)
                 }
             }
             .multilineTextAlignment(.center)
+            
+            // Retry button triggers the provided closure
             Button(action: retryAction) {
                 Text(StringConstants.tryAgain)
                     .fontWeight(.semibold)

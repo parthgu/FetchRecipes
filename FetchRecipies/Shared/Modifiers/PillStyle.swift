@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A reusable view modifier that styles content as a “pill” with padding, background, and rounded corners.
 struct PillStyle: ViewModifier {
     var horizontal: CGFloat = 12
     var vertical: CGFloat = 8
@@ -23,6 +24,7 @@ struct PillStyle: ViewModifier {
 }
 
 extension View {
+    /// Applies the `PillStyle` modifier with optional custom padding.
     func pillStyle(h: CGFloat = 12, v: CGFloat = 8) -> some View {
         modifier(PillStyle(horizontal: h, vertical: v))
     }
