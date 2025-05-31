@@ -100,8 +100,10 @@ The project follows the MVVM (Model-View-ViewModel) architecture pattern and is 
 ## Testing
 
 The app includes unit tests focusing on core business logic:
-
-TBD
+- Data fetching
+- Caching mechanisms
+- Data transformation
+- Business logic validation
 
 ## Error Handling
 
