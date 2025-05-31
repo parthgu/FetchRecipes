@@ -12,7 +12,7 @@ A modern SwiftUI recipe discovery app that helps you explore, save, and find you
 - Error states and empty states handling
 
 **Overall App Demo**
-https://drive.google.com/file/d/1OAwmA9lRiGafc1QvTq6x88H00hkENeCD/view?usp=drive_link
+- https://drive.google.com/file/d/1OAwmA9lRiGafc1QvTq6x88H00hkENeCD/view?usp=drive_link
 
 **ScreenShots**
 <p>
