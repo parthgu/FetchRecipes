@@ -11,6 +11,15 @@ A modern SwiftUI recipe discovery app that helps you explore, save, and find you
 - Tinder-style recipe discovery interface
 - Error states and empty states handling
 
+**Overall App Demo**
+https://drive.google.com/file/d/1OAwmA9lRiGafc1QvTq6x88H00hkENeCD/view?usp=drive_link
+
+**ScreenShots**
+![BrowsePage](https://github.com/user-attachments/assets/364e5734-180f-4a85-a52c-24592d46048b)
+![BrowsePageCuisine](https://github.com/user-attachments/assets/e8e6bbd3-e9e3-4de7-adba-6cf9dd6cde13)
+![FavoritesPage](https://github.com/user-attachments/assets/97791b22-9797-4cd6-a4af-920b36168b85)
+![DiscoverPage](https://github.com/user-attachments/assets/9635fc32-ccfe-4f4d-893a-36ceaf6c5f3b)
+
 ### Focus Areas
 
 1. **User Experience & Interface**
