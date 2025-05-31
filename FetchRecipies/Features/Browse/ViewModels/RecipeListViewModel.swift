@@ -28,8 +28,15 @@ class RecipeListViewModel: ObservableObject {
         }
     }
 
+    // NOTE: To test invalid or empty inputs, uncomment out the desired endpoint
+    
+    // All recipies:
     private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+    
+    // Malformed Data:
 //    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
+    
+    // Empty Data:
 //    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
     
     private var normalizedSearchText: String {

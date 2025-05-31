@@ -5,7 +5,7 @@
 //  Created by Parth Gupta on 5/29/25.
 //
 
-import UIKit
+import SwiftUI
 
 final class ImageCache {
     static let shared = ImageCache()
@@ -43,6 +43,11 @@ final class ImageCache {
         guard let data = image.jpegData(compressionQuality: 1.0) else { return }
 
         try? data.write(to: fileURL)
+    }
+    
+    func clearCache() {
+        memoryCache.removeAllObjects()
+        try? fileManager.removeItem(at: diskCacheURL)
     }
 }
 

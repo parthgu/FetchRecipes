@@ -43,5 +43,10 @@ final class FavoritesStore: ObservableObject {
     func contains(_ id: UUID) -> Bool {
         ids.contains(id)
     }
+    
+    func clearFavorites() {
+        ids.removeAll()
+        defaults.removeObject(forKey: key)
+    }
 }
 
