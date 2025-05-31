@@ -97,18 +97,9 @@ A better approach would have been:
    │       ├── Models/
    │       ├── Views/
    │       └── ViewModels/
-   ├── Core/                    # Core app components
-   │   ├── Extensions/         # Swift extensions
-   │   └── Constants/          # App-wide constants
    ├── Shared/                  # Shared components
-   │   ├── Views/              # Reusable UI components
-   │   └── Utilities/          # Helper functions
    ├── Networking/              # API and networking layer
-   │   ├── APIService.swift    # Main API service
-   │   └── ImageCache.swift    # Custom image caching
    ├── Resources/               # App resources
-   │   ├── Assets.xcassets     # Images and colors
-   │   └── Localizable.strings # String resources
    ├── RootView.swift          # Main app view
    └── FetchRecipiesApp.swift  # App entry point
    ```
