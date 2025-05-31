@@ -4,13 +4,6 @@ A modern SwiftUI recipe discovery app that helps you explore, save, and find you
 
 ### Summary
 
-[Screenshots/Video to be added showing:]
-- Browse tab with recipe list, search, and sorting functionality
-- Recipe detail view with high-quality photos and sharing options
-- Favorites tab displaying saved recipes
-- Tinder-style recipe discovery interface
-- Error states and empty states handling
-
 **Overall App Demo**
 - https://drive.google.com/file/d/1OAwmA9lRiGafc1QvTq6x88H00hkENeCD/view?usp=drive_link
 
