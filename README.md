@@ -29,7 +29,6 @@ A modern SwiftUI recipe discovery app that helps you explore, save, and find you
 - Swipe right to add to favorites
 - Swipe left to skip
 - Beautiful full-screen recipe cards
-- Quick decision making for meal planning
 
 ## Technical Highlights
 
