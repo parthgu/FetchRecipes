@@ -11,19 +11,37 @@ struct FavoritesListView: View {
     @StateObject var viewModel: FavoritesViewModel
 
     var body: some View {
-        List(viewModel.favorites) { recipe in
-            RecipeRowView(recipe: recipe)
-        }
-        .navigationTitle("Favorites")
-        .refreshable { await viewModel.refresh() }
-        .overlay {
+        ZStack {
+            // Scrollable list of favorite recipes
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(viewModel.favorites) { recipe in
+                        NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
+                            RecipeRowView(recipe: recipe)
+                                .cardStyle()
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+            .padding()
+            .refreshable {
+                await viewModel.refresh()
+            }
+
+            // Overlay shown when there are no favorites
             if viewModel.favorites.isEmpty {
-                Text("No favorites yet.")
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding()
+                VStack {
+                    Spacer()
+                    Text("No favorites yet.")
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    Spacer()
+                }
             }
         }
+        .navigationTitle("Favorites")
     }
 }
-

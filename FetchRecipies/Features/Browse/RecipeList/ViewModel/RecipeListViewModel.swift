@@ -20,7 +20,13 @@ class RecipeListViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var sortOption: SortOption = .nameAsc
     @Published var errorMessage: String?
-    @Published var isLoading = false
+    @Published var isLoading = true
+    
+    init() {
+        Task {
+            await fetchRecipes()
+        }
+    }
 
     private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
 //    private let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
@@ -54,6 +60,7 @@ class RecipeListViewModel: ObservableObject {
     }
 
     func fetchRecipes() async {
+        errorMessage = nil
         isLoading = true
 
         do {

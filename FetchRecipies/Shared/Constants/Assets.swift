@@ -14,4 +14,10 @@ enum AssetNameConstants {
     static let heart        = "heart"
     static let alert        = "alert"
     static let book         = "book"
+    static let bookPages    = "book.pages"
+    static let search       = "magnifyingglass"
+    static let share        = "square.and.arrow.up"
+    static let globe        = "globe"
+    static let playCircle   = "play.circle"
+    static let emptyDeckIcon = "eyes"
 }

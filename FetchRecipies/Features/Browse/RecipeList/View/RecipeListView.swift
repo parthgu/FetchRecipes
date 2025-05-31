@@ -9,6 +9,9 @@ import SwiftUI
 
 struct RecipeListView: View {
     @ObservedObject var viewModel: RecipeListViewModel
+    @State private var isSearchActive = false
+    @State private var scrollOffset: CGFloat = 0
+//    @State private var taskId: UUID = .init()
 
     var body: some View {
         Group {
@@ -38,9 +41,19 @@ struct RecipeListView: View {
             }
         }
         .navigationTitle(StringConstants.recipesTitle)
-        .searchable(text: $viewModel.searchText, prompt: StringConstants.searchPlaceholder)
-        .task {
-            await viewModel.fetchRecipes()
+        .searchable(
+            text: $viewModel.searchText,
+            isPresented: $isSearchActive,
+            prompt: StringConstants.searchPlaceholder
+        )
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                if scrollOffset > 10 {
+                    Button { isSearchActive = true } label: {
+                        Image(systemName: AssetNameConstants.search)
+                    }
+                }
+            }
         }
     }
     
@@ -90,15 +103,30 @@ struct RecipeListView: View {
                 // Recipe cards
                 LazyVStack(spacing: 16) {
                     ForEach(viewModel.displayedRecipes) { recipe in
-                        RecipeRowView(recipe: recipe)
-                            .cardStyle()
+                        NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
+                            RecipeRowView(recipe: recipe)
+                                .cardStyle()
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal)
             }
         }
+        .onScrollGeometryChange(
+            for: CGFloat.self,
+            of: { geo in
+                // geo.contentOffset.y includes bounce; add insets.top to zero at the true top
+                geo.contentOffset.y + geo.contentInsets.top
+            },
+            action: { _, new in
+                scrollOffset = new
+            }
+        )
         .refreshable {
-            await viewModel.fetchRecipes()
+            Task {
+                await viewModel.fetchRecipes()
+            }
         }
     }
 }

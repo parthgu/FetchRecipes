@@ -20,7 +20,7 @@ struct CuisineRecipesView: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(recipes) { recipe in
-                    NavigationLink(destination: Text(recipe.name)) {
+                    NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
                         VStack(spacing: 0) {
                             AsyncImageLoader(
                                 url: recipe.photoURLSmall,

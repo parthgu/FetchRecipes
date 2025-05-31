@@ -27,6 +27,18 @@ final class FavoritesStore: ObservableObject {
         else { ids.insert(id) }
         defaults.set(ids.map(\.uuidString), forKey: key)
     }
+    
+    func add(_ id: UUID) {
+        if ids.contains(id) { return }
+        else { ids.insert(id) }
+        defaults.set(ids.map(\.uuidString), forKey: key)
+    }
+    
+    func remove(_ id: UUID) {
+        if !ids.contains(id) { return }
+        else { ids.remove(id) }
+        defaults.set(ids.map(\.uuidString), forKey: key)
+    }
 
     func contains(_ id: UUID) -> Bool {
         ids.contains(id)
