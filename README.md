@@ -37,14 +37,14 @@ A modern SwiftUI recipe discovery app that helps you explore, save, and find you
 
 ### Time Spent
 
-Approximately 12 hours total, allocated as follows:
+Approximately 13.5 hours total, allocated as follows:
 
 - Initial setup and architecture planning: ~2 hours
 - Core functionality (Browse, API integration): ~3 hours
 - Image caching system: ~2 hours
 - Favorites implementation: ~1.5 hours
 - Discover (Tinder-style) feature: ~2 hours
-- Polish, error handling, and testing: ~1.5 hours
+- Polish, error handling, and testing: ~3 hours
 
 ### Trade-offs and Decisions
 
